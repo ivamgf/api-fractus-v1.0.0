@@ -1,18 +1,27 @@
-FROM strapi/base
+FROM node:11.1.0-alpine
 
-WORKDIR /srv/app
+LABEL maintainer="Ivam Galvao Filho <ivam.galvao.filho@posgrad.ufsc.br>" \
+      org.label-schema.vendor="Strapi" \
+      org.label-schema.name="Strapi Docker image" \
+      org.label-schema.description="Strapi containerized" \
+      org.label-schema.url="https://strapi.io" \
+      org.label-schema.vcs-url="https://github.com/strapi/strapi-docker" \
+      org.label-schema.version=latest \
+      org.label-schema.schema-version="1.0"
 
-COPY ./package.json ./
-COPY ./yarn.lock ./
+WORKDIR /usr/src/api
 
-RUN yarn install
+RUN echo "unsafe-perm = true" >> ~/.npmrc
 
-COPY . .
+RUN npm install -g strapi@alpha
 
-RUN yarn build
+COPY strapi.sh ./
+RUN chmod +x ./strapi.sh
 
 EXPOSE 1337
 
-ENV NODE_ENV production
+COPY healthcheck.js ./
+HEALTHCHECK --interval=15s --timeout=5s --start-period=30s \
+      CMD node /usr/src/api/healthcheck.js
 
-CMD ["yarn", "start"]
+CMD ["./strapi.sh"]
