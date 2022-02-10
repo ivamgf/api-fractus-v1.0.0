@@ -23,14 +23,14 @@ jobs:
       uses: docker/login-action@v1
       with:
         registry: https://mcr.microsoft.com/
-        username: ${{ secrets.AzureAppService_ContainerUsername_521b01cfd0fb4e73a1ccfccc200a76fe }}
-        password: ${{ secrets.AzureAppService_ContainerPassword_cbd54afed89c41b3b54c93e6baee52c1 }}
+        username: ${{ secrets.AzureAppService_ContainerUsername_bcabda30289a4a8eaad3d8b645bf6761 }}
+        password: ${{ secrets.AzureAppService_ContainerPassword_375efc2b1f0c49e984b3ce77b32eb72c }}
 
     - name: Build and push container image to registry
       uses: docker/build-push-action@v2
       with:
         push: true
-        tags: mcr.microsoft.com/${{ secrets.AzureAppService_ContainerUsername_521b01cfd0fb4e73a1ccfccc200a76fe }}/appsvc/staticsite:${{ github.sha }}
+        tags: mcr.microsoft.com/${{ secrets.AzureAppService_ContainerUsername_bcabda30289a4a8eaad3d8b645bf6761 }}/appsvc/staticsite:${{ github.sha }}
         file: ./Dockerfile
 
   deploy:
@@ -47,5 +47,5 @@ jobs:
       with:
         app-name: 'api-fractus-v1'
         slot-name: 'production'
-        publish-profile: ${{ secrets.AzureAppService_PublishProfile_82cec41d5c4545b39c718d72e1289236 }}
-        images: 'mcr.microsoft.com/${{ secrets.AzureAppService_ContainerUsername_521b01cfd0fb4e73a1ccfccc200a76fe }}/appsvc/staticsite:${{ github.sha }}'
+        publish-profile: ${{ secrets.AzureAppService_PublishProfile_8e00c5b1cf4f4e14b0a3101d60ab1279 }}
+        images: 'mcr.microsoft.com/${{ secrets.AzureAppService_ContainerUsername_bcabda30289a4a8eaad3d8b645bf6761 }}/appsvc/staticsite:${{ github.sha }}'
