@@ -2,7 +2,7 @@ FROM node:11.1.0-alpine
 
 LABEL maintainer="Ivam Galvao Filho <ivam.galvao.filho@posgrad.ufsc.br>" \
       org.label-schema.vendor="Strapi" \
-      org.label-schema.name="Strapi Docker image" \
+      org.label-schema.name="strapi docker image" \
       org.label-schema.description="Strapi containerized" \
       org.label-schema.url="https://strapi.io" \
       org.label-schema.vcs-url="https://github.com/strapi/strapi-docker" \
