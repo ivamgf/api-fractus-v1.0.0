@@ -1,23 +1,21 @@
-FROM node:11.1.0-alpine
+FROM node:12-alpine
 
-LABEL maintainer="Ivam Galvao Filho <ivam.galvao.filho@posgrad.ufsc.br>" \
-      org.label-schema.vendor="Strapi" \
-      org.label-schema.name="strapi docker image" \
-      org.label-schema.description="Strapi containerized" \
-      org.label-schema.url="https://strapi.io" \
-      org.label-schema.vcs-url="https://github.com/strapi/strapi-docker" \
-      org.label-schema.version=latest \
-      org.label-schema.schema-version="1.0"
+ENV PORT 1337
+ENV HOST 0.0.0.0
+ENV NODE_ENV production
 
-WORKDIR /usr/src/api
+# create app dir
+RUN mkdir -p /usr/src/app
+WORKDIR /usr/src/app
 
-RUN echo "unsafe-perm = true" >> ~/.npmrc
+# install deps
+COPY package*.json /usr/src/app/
+COPY yarn.lock /usr/src/app/
+RUN yarn install
 
-RUN npm install -g strapi@alpha
+COPY . /usr/src/app
 
-COPY strapi.sh ./
-RUN chmod +x ./strapi.sh
-
+RUN yarn build
 EXPOSE 1337
 
-CMD ["./strapi.sh"]
+CMD ["yarn", "start"]
