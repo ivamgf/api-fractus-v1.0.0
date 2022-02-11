@@ -10,12 +10,11 @@ WORKDIR /usr/src/app
 
 # install deps
 COPY package*.json /usr/src/app/
-COPY yarn.lock /usr/src/app/
-RUN yarn install
+RUN npm install
 
 COPY . /usr/src/app
 
-RUN yarn build
+RUN npm run build
 EXPOSE 1337
 
-CMD ["yarn", "start"]
+CMD ["npm", "start"]
