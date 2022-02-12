@@ -8,6 +8,6 @@ RUN npm install
 
 RUN cat package.json
 
-EXPOSE 1337 ##
+EXPOSE 1337
 
 CMD npm start
